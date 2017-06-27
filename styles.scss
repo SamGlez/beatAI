@@ -1,21 +1,29 @@
 .snake{
-  background-color: orange;
+
 }
 
 .cell{
   background-size: contain;
   box-sizing: border-box;
-  float: left;
-  height: 16px;
-  width: 16px;
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  background-image: url("worm.png");
+
 }
 
 .head{
-  background-color: black;
+  height: 55px;
+  width: 55px;
+  background-image: url("nerd.png");
+  background-color: transparent;
+  z-index: 1;
 }
 
 .food{
-  background-color: grey;
+  height: 80px;
+  width: 80px;
+  background-image: url("ironhack-logo.png");
 }
 
 
@@ -26,7 +34,7 @@
 }
 
 .row {
-  margin-top: 637px;
+  margin-top: 10px;
   height: 150px;
 }
 
@@ -40,9 +48,9 @@
 .game {
   background-image: url("pattern.png");
   background-size: cover;
-  height: 78%;
-  width: 100%;
-  position: absolute;
+  height: 600px;
+  width: 1440px;
+  position: relative;
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -77,6 +85,14 @@
 
 .score-nerd {
   margin-left: 150px;
+}
+
+.score-percentage-robot{
+  margin-left: 110px;
+}
+
+.score-percentage-nerd{
+      margin-left: 220px;
 }
 
 
