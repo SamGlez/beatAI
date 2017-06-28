@@ -143,8 +143,6 @@ Game.prototype.update = function(){
   this.robot.move(this.rows, this.columns);
   this.randomDirection();
   this.growRobot();
-  this.growRobot();
-  this.growRobot();
 
   if (this.snake.hasEatenFood(this.food)){
       this.snake.grow();
