@@ -3,10 +3,13 @@ function Game(arg) {
   this.columns = arg.columns;
   this.snake = new arg.Snake();
   this.snakeConstructor = arg.Snake;
-  this.cellSize = arg.size / this.rows;
+  // this.robot = new arg.Robot();
+//  this.robotConstructor = arg.Robot;
+ this.cellSize = arg.size / this.rows;
   this.speed = arg.speed;
   this.food = undefined;
   this.scoreNerd= 0;
+//  this.drawRobot();
   this.drawSnake();
   this.generateFood();
   this.drawFood();
@@ -27,6 +30,21 @@ Game.prototype.drawSnake = function() {
     $(".game").append(unit);
   });
 };
+
+// Game.prototype.drawRobot = function() {
+//   var that = this;
+//   this.robot.size.forEach(function(position, index) {
+//     var unit = $("<div>").addClass("cell robot").css({
+//       top: position.row * that.cellSize,
+//       left: position.column * that.cellSize
+//     });
+//     if (index === 0) {
+//       unit.addClass("head");
+//     }
+//     $(".game").append(unit);
+//   });
+// };
+//
 
 Game.prototype.clearSnake = function() {
   $(".game .snake").remove();
