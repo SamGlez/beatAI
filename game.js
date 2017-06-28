@@ -3,13 +3,14 @@ function Game(arg) {
   this.columns = arg.columns;
   this.snake = new arg.Snake();
   this.snakeConstructor = arg.Snake;
-  // this.robot = new arg.Robot();
-//  this.robotConstructor = arg.Robot;
- this.cellSize = arg.size / this.rows;
+  this.robot = new arg.Robot();
+ this.robotConstructor = arg.Robot;
+  this.cellSize = arg.size / this.rows;
   this.speed = arg.speed;
   this.food = undefined;
   this.scoreNerd= 0;
-//  this.drawRobot();
+  this.scoreRobot = 0;
+  this.drawRobot();
   this.drawSnake();
   this.generateFood();
   this.drawFood();
@@ -25,26 +26,29 @@ Game.prototype.drawSnake = function() {
       left: position.column * that.cellSize
     });
     if (index === 0) {
-      unit.addClass("head");
+      unit.addClass("nerd-head");
     }
     $(".game").append(unit);
   });
 };
 
-// Game.prototype.drawRobot = function() {
-//   var that = this;
-//   this.robot.size.forEach(function(position, index) {
-//     var unit = $("<div>").addClass("cell robot").css({
-//       top: position.row * that.cellSize,
-//       left: position.column * that.cellSize
-//     });
-//     if (index === 0) {
-//       unit.addClass("head");
-//     }
-//     $(".game").append(unit);
-//   });
-// };
-//
+Game.prototype.drawRobot = function() {
+  var that = this;
+  this.robot.size.forEach(function(position, index) {
+    var unit = $("<div>").addClass("cell robot").css({
+      top: position.row * that.cellSize,
+      left: position.column * that.cellSize
+    });
+    if (index === 0) {
+      unit.addClass("robot-head");
+    }
+    $(".game").append(unit);
+  });
+};
+
+Game.prototype.clearRobot = function() {
+  $(".game .robot").remove();
+};
 
 Game.prototype.clearSnake = function() {
   $(".game .snake").remove();
@@ -53,13 +57,22 @@ Game.prototype.clearFood = function() {
   $(".game .food").remove();
 };
 
+Game.prototype.clearScore = function() {
+  this.scoreNerd = 0;
+  this.scoreRobot = 0;
+  $(".score-nerd").html(this.scoreNerd);
+  $(".score-robot").html(this.scoreRobot);
+
+};
+
 Game.prototype.generateFood = function() {
   do {
     this.food = {
       row: Math.floor(Math.random() * this.rows),
       column: Math.floor(Math.random() * this.columns)
     };
-  } while (this.snake.collidesWith(this.food));
+  } while (this.snake.collidesWith(this.food) || this.robot.collidesWith(this.food && this.snake));
+
 };
 
 Game.prototype.drawFood = function() {
@@ -77,23 +90,34 @@ Game.prototype.assignKeys = function() {
     switch (e.keyCode) {
       case 38:
         this.snake.changeDirection('up');
-        console.log(this.snake.direction);
         break;
       case 40:
         this.snake.changeDirection('down');
-        console.log(this.snake.direction);
         break;
       case 37:
         this.snake.changeDirection('left');
-        console.log(this.snake.direction);
         break;
       case 39:
         this.snake.changeDirection('right');
-        console.log(this.snake.direction);
         break;
     }
   }.bind(this));
 };
+
+Game.prototype.randomDirection= function(){
+  var directionsArray = ["up", "down", "left", "right"];
+  var rand = directionsArray[Math.floor(Math.random() * directionsArray.length)];
+  console.log(rand);
+  this.robot.changeDirection(rand);
+};
+
+Game.prototype.growRobot = function() {
+  if (!this.intervalRobot){
+    this.intervalRobot = setInterval(this.robot.grow(), 3000);
+    this.updateScoreRobot();
+  }
+};
+
 
 //
 Game.prototype.start = function() {
@@ -102,16 +126,29 @@ Game.prototype.start = function() {
   }
 };
 
+
+
+Game.prototype.updateScoreRobot = function () {
+  this.scoreRobot += 5;
+  $(".score-robot").html(this.scoreRobot);
+};
+
 Game.prototype.updateScore = function () {
-  this.scoreNerd += 1;
+  this.scoreNerd += 5;
   $(".score-nerd").html(this.scoreNerd);
 };
 
 Game.prototype.update = function(){
   this.snake.move(this.rows, this.columns);
+  this.robot.move(this.rows, this.columns);
+  this.randomDirection();
+  this.growRobot();
+  this.growRobot();
+  this.growRobot();
 
   if (this.snake.hasEatenFood(this.food)){
       this.snake.grow();
+      this.robot.grow();
       this.clearFood();
       this.generateFood();
       this.drawFood();
@@ -123,7 +160,17 @@ Game.prototype.update = function(){
       this.drawFood();
       this.updateScore();
 
+
   }
+
+  // if (!this.timeoutId) {
+  //   this.growRobot();
+  // }
+  //
+  // if (this.snake.collidesWith(this.robot)){
+  //   alert('Game Over');
+  //   this.stop();
+  // }
 
   if (this.snake.hasEatenItself()){
     alert('Game Over');
@@ -131,7 +178,9 @@ Game.prototype.update = function(){
   }
 
   this.clearSnake();
+  this.clearRobot();
   this.drawSnake();
+  this.drawRobot();
 };
 
 Game.prototype.stop =  function(){
@@ -139,11 +188,16 @@ Game.prototype.stop =  function(){
   if (this.intervalId){
     clearInterval(this.intervalId);
     this.intervalId = undefined;
+    clearTimeout(this.timeoutId);
+    this.timeoutId = undefined;
+    // this.timeoutId = undefined;
     this.snake = new this.snakeConstructor();
+    this.robot = new this.robotConstructor();
     this.clearFood();
     this.generateFood();
     this.drawFood();
     this.start();
+    this.clearScore();
   }
 };
 
@@ -152,8 +206,9 @@ $(document).ready(function() {
     size: 590,
     columns :120,
     rows: 49,
-    speed: 250,
-    Snake: Snake
+    speed: 400,
+    Snake: Snake,
+    Robot: Robot
   });
    game.start();
 });

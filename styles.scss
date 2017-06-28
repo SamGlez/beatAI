@@ -12,10 +12,18 @@
 
 }
 
-.head{
+.nerd-head{
   height: 55px;
   width: 55px;
   background-image: url("nerd.png");
+  background-color: transparent;
+  z-index: 1;
+}
+
+.robot-head{
+  height: 55px;
+  width: 55px;
+  background-image: url("robot.png");
   background-color: transparent;
   z-index: 1;
 }
