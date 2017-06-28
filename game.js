@@ -85,9 +85,8 @@ Game.prototype.start = function() {
 };
 
 Game.prototype.updateScore = function () {
-  var score = this.scoreNerd;
-  score ++;
-  $(".score-nerd").html = score;
+  this.scoreNerd += 1;
+  $(".score-nerd").html(this.scoreNerd);
 };
 
 Game.prototype.update = function(){
@@ -96,6 +95,12 @@ Game.prototype.update = function(){
   if (this.snake.hasEatenFood(this.food)){
       this.snake.grow();
       this.clearFood();
+      this.generateFood();
+      this.drawFood();
+      this.generateFood();
+      this.drawFood();
+      this.generateFood();
+      this.drawFood();
       this.generateFood();
       this.drawFood();
       this.updateScore();
