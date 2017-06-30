@@ -6,17 +6,17 @@
   height: 45px;
   width: 45px;
   position: absolute;
-  background-image: url("worm.png");
+  background-image: url("img/worm.png");
 }
 
 .robot {
-  background-image: url('robot-body.png');
+  background-image: url('img/robot-body.png');
 }
 
 .nerd-head {
   height: 45px;
   width: 45px;
-  background-image: url("nerd.png");
+  background-image: url("img/nerd.png");
   background-color: transparent;
   z-index: 2;
 }
@@ -24,7 +24,7 @@
 .robot-head {
   height: 45px;
   width: 45px;
-  background-image: url("robot.png");
+  background-image: url("img/robot.png");
   background-color: transparent;
   z-index: 1;
 }
@@ -32,7 +32,7 @@
 .food {
   height: 50px;
   width: 50px;
-  background-image: url("ironhack-logo.png");
+  background-image: url("img/ironhack-logo.png");
 }
 //other elements(only css)
 .info {
@@ -46,14 +46,14 @@
 }
 
 .logo {
-  background-image: url("logo.jpg");
+  background-image: url("img/logo.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
 .game {
-  background-image: url("pattern.png");
+  background-image: url("img/pattern.png");
   background-size: cover;
   height: 600px;
   width: 1440px;
@@ -133,7 +133,7 @@ body {
 }
 
 .wrapper {
-  background-image: url("landingBeat.jpg");
+  background-image: url("img/landingBeat.jpg");
   background-size: cover;
   /* <------ */
   background-repeat: no-repeat;
