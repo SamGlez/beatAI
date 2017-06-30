@@ -12,25 +12,29 @@
 
 }
 
+.robot {
+  background-image: url('robot-body.png');
+}
+
 .nerd-head{
-  height: 55px;
-  width: 55px;
+  height: 45px;
+  width: 45px;
   background-image: url("nerd.png");
   background-color: transparent;
-  z-index: 1;
+  z-index: 2;
 }
 
 .robot-head{
-  height: 55px;
-  width: 55px;
+  height: 45px;
+  width: 45px;
   background-image: url("robot.png");
   background-color: transparent;
   z-index: 1;
 }
 
 .food{
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
   background-image: url("ironhack-logo.png");
 }
 
@@ -82,9 +86,31 @@
 .score {
   display: inline-block;
   position: absolute;
-  margin-top: 40px;
+  margin-top: 12px;
   font-size: 65px;
   color: #19ECFF;
+}
+
+.scoreRobot-info{
+  display: inline-block;
+  position: absolute;
+  color: #19ECFF;
+  font-size: 30px;
+text-align: center;
+line-height: 30px;
+margin-top: 90px;
+margin-left: 22px;
+}
+
+.scoreNerd-info{
+  display: inline-block;
+  position: absolute;
+  color: #19ECFF;
+  font-size: 30px;
+text-align: center;
+line-height: 33px;
+margin-top: 90px;
+margin-left: 110px;
 }
 
 .score-robot {
@@ -92,7 +118,7 @@
 }
 
 .score-nerd {
-  margin-left: 150px;
+  margin-left: 130px;
 }
 
 .score-percentage-robot{

@@ -74,6 +74,8 @@ Snake.prototype.move = function(maxRows, maxColumns) {
   this.previousTail = this.size.pop();
 };
 
+
+
 Snake.prototype.grow = function () {
   if(this.previousTail){
     this.size.push(this.previousTail);

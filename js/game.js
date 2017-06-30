@@ -10,6 +10,7 @@ function Game(arg) {
   this.food = undefined;
   this.scoreNerd= 0;
   this.scoreRobot = 0;
+  this.initialRobot();
   this.drawRobot();
   this.drawSnake();
   this.generateFood();
@@ -36,7 +37,7 @@ Game.prototype.drawRobot = function() {
   var that = this;
   this.robot.size.forEach(function(position, index) {
     var unit = $("<div>").addClass("cell robot").css({
-      top: position.row * that.cellSize,
+      top: position.row  * that.cellSize,
       left: position.column * that.cellSize
     });
     if (index === 0) {
@@ -45,6 +46,31 @@ Game.prototype.drawRobot = function() {
     $(".game").append(unit);
   });
 };
+
+Game.prototype.initialRobot = function () {
+  this.robot.size =  [{
+      row: 3,
+      column: 5
+    },
+    {
+      row: 3,
+      column: 4
+    },
+    {
+      row: 3,
+      column: 3
+    },
+    {
+      row: 3,
+      column: 2
+    },
+    {
+      row: 3,
+      column: 1
+    }
+  ];
+};
+
 
 Game.prototype.clearRobot = function() {
   $(".game .robot").remove();
@@ -71,7 +97,7 @@ Game.prototype.generateFood = function() {
       row: Math.floor(Math.random() * this.rows),
       column: Math.floor(Math.random() * this.columns)
     };
-  } while (this.snake.collidesWith(this.food) || this.robot.collidesWith(this.food && this.snake));
+  } while (this.snake.collidesWith(this.food) && this.robot.collidesWith(this.food && this.snake));
 
 };
 
@@ -105,25 +131,39 @@ Game.prototype.assignKeys = function() {
 };
 
 Game.prototype.randomDirection= function(){
+  var newDirection = "";
+  var oldDirection = this.robot.direction;
+  var option = Math.random();
+  var option2 = Math.random();
+  var option3 = Math.random();
   var directionsArray = ["up", "down", "left", "right"];
-  var rand = directionsArray[Math.floor(Math.random() * directionsArray.length)];
-  console.log(rand);
-  this.robot.changeDirection(rand);
+  if (option < 0,01 && option2 < 0,01 && option3 < 0,01){newDirection = directionsArray[Math.floor(Math.random() * directionsArray.length)];} else { newDirection = oldDirection;}
+  this.robot.changeDirection(newDirection);
 };
 
-Game.prototype.growRobot = function() {
-  if (!this.intervalRobot){
-    this.intervalRobot = setInterval(this.robot.grow(), 3000);
-    this.updateScoreRobot();
-  }
+Game.prototype.startRobotGrow = function() {
+  var that = this;
+  this.intervalRobot = setInterval(function () {
+      that.robot.grow();
+      that.updateScoreRobot();
+  }, 9 * 1000);
 };
+
+Game.prototype.collidesWithSnake = function () {
+      if ($(".nerd-head").collision(".robot").length >  0) {
+        return true;
+      }
+};
+
 
 
 //
 Game.prototype.start = function() {
   if (!this.intervalId){
-    this.intervalId = setInterval(this.update.bind(this), 50);
+    this.intervalId = setInterval(this.update.bind(this), 130);
   }
+  this.startRobotGrow();
+    this.initialRobot();
 };
 
 
@@ -142,12 +182,14 @@ Game.prototype.update = function(){
   this.snake.move(this.rows, this.columns);
   this.robot.move(this.rows, this.columns);
   this.randomDirection();
-  this.growRobot();
 
   if (this.snake.hasEatenFood(this.food)){
       this.snake.grow();
-      this.robot.grow();
       this.clearFood();
+      this.generateFood();
+      this.drawFood();
+      this.generateFood();
+      this.drawFood();
       this.generateFood();
       this.drawFood();
       this.generateFood();
@@ -161,17 +203,24 @@ Game.prototype.update = function(){
 
   }
 
-  // if (!this.timeoutId) {
-  //   this.growRobot();
-  // }
-  //
-  // if (this.snake.collidesWith(this.robot)){
-  //   alert('Game Over');
-  //   this.stop();
-  // }
+  if (this.collidesWithSnake()){
+    alert('Oh, AI replaced you. If you want to continue in the DIGITAL ERA...see you soon in Ironhack.');
+    this.stop();
+  }
+
+  if(this.scoreRobot === 100){
+    alert('Oh, AI replaced you. If you want to continue in the DIGITAL ERA...see you soon in Ironhack.');
+    this.stop();
+  }
+
+  if(this.scoreNerd === 100){
+    alert('WELCOME TO THE DIGITAL AGE. Digital Skills powered by Ironhack.');
+    this.stop();
+  }
+
 
   if (this.snake.hasEatenItself()){
-    alert('Game Over');
+    alert('Oh, AI replaced you. If you want to continue in the DIGITAL ERA...see you soon in Ironhack.');
     this.stop();
   }
 
@@ -186,8 +235,9 @@ Game.prototype.stop =  function(){
   if (this.intervalId){
     clearInterval(this.intervalId);
     this.intervalId = undefined;
-    clearTimeout(this.timeoutId);
-    this.timeoutId = undefined;
+    clearInterval(this.intervalRobot);
+    this.intervalRobot = undefined;
+    this.timeoutRobot = undefined;
     // this.timeoutId = undefined;
     this.snake = new this.snakeConstructor();
     this.robot = new this.robotConstructor();
@@ -201,12 +251,12 @@ Game.prototype.stop =  function(){
 
 $(document).ready(function() {
   var game = new Game({
-    size: 590,
-    columns :120,
-    rows: 49,
-    speed: 400,
+    size: 620,
+    columns :23,
+    rows: 10,
+    speed: 2,
     Snake: Snake,
-    Robot: Robot
+    Robot: Snake
   });
    game.start();
 });
