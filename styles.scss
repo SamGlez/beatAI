@@ -1,22 +1,19 @@
-.snake{
+.snake {}
 
-}
-
-.cell{
+.cell {
   background-size: contain;
   box-sizing: border-box;
   height: 45px;
   width: 45px;
   position: absolute;
   background-image: url("worm.png");
-
 }
 
 .robot {
   background-image: url('robot-body.png');
 }
 
-.nerd-head{
+.nerd-head {
   height: 45px;
   width: 45px;
   background-image: url("nerd.png");
@@ -24,7 +21,7 @@
   z-index: 2;
 }
 
-.robot-head{
+.robot-head {
   height: 45px;
   width: 45px;
   background-image: url("robot.png");
@@ -32,13 +29,11 @@
   z-index: 1;
 }
 
-.food{
+.food {
   height: 50px;
   width: 50px;
   background-image: url("ironhack-logo.png");
 }
-
-
 //other elements(only css)
 .info {
   display: inline-block;
@@ -69,9 +64,9 @@
 
 .container {
   width: 100%;
-  margin: 0;
-  margin-left: -22px;
+  margin: 0 0 0 -22px;
 }
+
 .icons {
   margin-top: 20px;
   height: 120px;
@@ -91,26 +86,26 @@
   color: #19ECFF;
 }
 
-.scoreRobot-info{
+.scoreRobot-info {
   display: inline-block;
   position: absolute;
   color: #19ECFF;
   font-size: 30px;
-text-align: center;
-line-height: 30px;
-margin-top: 90px;
-margin-left: 22px;
+  text-align: center;
+  line-height: 30px;
+  margin-top: 90px;
+  margin-left: 22px;
 }
 
-.scoreNerd-info{
+.scoreNerd-info {
   display: inline-block;
   position: absolute;
   color: #19ECFF;
   font-size: 30px;
-text-align: center;
-line-height: 33px;
-margin-top: 90px;
-margin-left: 110px;
+  text-align: center;
+  line-height: 33px;
+  margin-top: 90px;
+  margin-left: 110px;
 }
 
 .score-robot {
@@ -121,22 +116,20 @@ margin-left: 110px;
   margin-left: 130px;
 }
 
-.score-percentage-robot{
+.score-percentage-robot {
   margin-left: 110px;
 }
 
-.score-percentage-nerd{
-      margin-left: 220px;
+.score-percentage-nerd {
+  margin-left: 220px;
 }
-
-
 //Landing Page
 body {
   background-color: #08A9E8;
   width: 100%;
   height: 100%;
   font-family: 'Roboto', sans-serif;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .wrapper {

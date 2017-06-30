@@ -4,11 +4,11 @@ function Game(arg) {
   this.snake = new arg.Snake();
   this.snakeConstructor = arg.Snake;
   this.robot = new arg.Robot();
- this.robotConstructor = arg.Robot;
+  this.robotConstructor = arg.Robot;
   this.cellSize = arg.size / this.rows;
   this.speed = arg.speed;
   this.food = undefined;
-  this.scoreNerd= 0;
+  this.scoreNerd = 0;
   this.scoreRobot = 0;
   this.initialRobot();
   this.drawRobot();
@@ -37,7 +37,7 @@ Game.prototype.drawRobot = function() {
   var that = this;
   this.robot.size.forEach(function(position, index) {
     var unit = $("<div>").addClass("cell robot").css({
-      top: position.row  * that.cellSize,
+      top: position.row * that.cellSize,
       left: position.column * that.cellSize
     });
     if (index === 0) {
@@ -47,8 +47,8 @@ Game.prototype.drawRobot = function() {
   });
 };
 
-Game.prototype.initialRobot = function () {
-  this.robot.size =  [{
+Game.prototype.initialRobot = function() {
+  this.robot.size = [{
       row: 3,
       column: 5
     },
@@ -130,96 +130,100 @@ Game.prototype.assignKeys = function() {
   }.bind(this));
 };
 
-Game.prototype.randomDirection= function(){
+Game.prototype.randomDirection = function() {
   var newDirection = "";
   var oldDirection = this.robot.direction;
   var option = Math.random();
   var option2 = Math.random();
   var option3 = Math.random();
   var directionsArray = ["up", "down", "left", "right"];
-  if (option < 0,01 && option2 < 0,01 && option3 < 0,01){newDirection = directionsArray[Math.floor(Math.random() * directionsArray.length)];} else { newDirection = oldDirection;}
+  if (option < 0, 01 && option2 < 0, 01 && option3 < 0, 01) {
+    newDirection = directionsArray[Math.floor(Math.random() * directionsArray.length)];
+  } else {
+    newDirection = oldDirection;
+  }
   this.robot.changeDirection(newDirection);
 };
 
 Game.prototype.startRobotGrow = function() {
   var that = this;
-  this.intervalRobot = setInterval(function () {
-      that.robot.grow();
-      that.updateScoreRobot();
+  this.intervalRobot = setInterval(function() {
+    that.robot.grow();
+    that.updateScoreRobot();
   }, 9 * 1000);
 };
 
-Game.prototype.collidesWithSnake = function () {
-      if ($(".nerd-head").collision(".robot").length >  0) {
-        return true;
-      }
+Game.prototype.collidesWithSnake = function() {
+  if ($(".nerd-head").collision(".robot").length > 0) {
+    return true;
+  }
 };
 
 
 
 //
 Game.prototype.start = function() {
-  if (!this.intervalId){
+  if (!this.intervalId) {
     this.intervalId = setInterval(this.update.bind(this), 130);
   }
   this.startRobotGrow();
-    this.initialRobot();
+  this.initialRobot();
 };
 
 
 
-Game.prototype.updateScoreRobot = function () {
+Game.prototype.updateScoreRobot = function() {
   this.scoreRobot += 5;
   $(".score-robot").html(this.scoreRobot);
 };
 
-Game.prototype.updateScore = function () {
+Game.prototype.updateScore = function() {
   this.scoreNerd += 5;
   $(".score-nerd").html(this.scoreNerd);
 };
 
-Game.prototype.update = function(){
+Game.prototype.update = function() {
   this.snake.move(this.rows, this.columns);
   this.robot.move(this.rows, this.columns);
   this.randomDirection();
 
-  if (this.snake.hasEatenFood(this.food)){
-      this.snake.grow();
-      this.clearFood();
-      this.generateFood();
-      this.drawFood();
-      this.generateFood();
-      this.drawFood();
-      this.generateFood();
-      this.drawFood();
-      this.generateFood();
-      this.drawFood();
-      this.generateFood();
-      this.drawFood();
-      this.generateFood();
-      this.drawFood();
-      this.updateScore();
+  if (this.snake.hasEatenFood(this.food)) {
+    this.snake.grow();
+    this.clearFood();
+    this.generateFood();
+    this.drawFood();
+    this.generateFood();
+    this.drawFood();
+    this.generateFood();
+    this.drawFood();
+    this.generateFood();
+    this.drawFood();
+    this.generateFood();
+    this.drawFood();
+    this.generateFood();
+    this.drawFood();
+    this.updateScore();
 
 
   }
 
-  if (this.collidesWithSnake()){
+  if (this.collidesWithSnake()) {
     alert('Oh, AI replaced you. If you want to continue in the DIGITAL ERA...see you soon in Ironhack.');
     this.stop();
   }
 
-  if(this.scoreRobot === 100){
+  if (this.scoreRobot === 100) {
     alert('Oh, AI replaced you. If you want to continue in the DIGITAL ERA...see you soon in Ironhack.');
     this.stop();
   }
 
-  if(this.scoreNerd === 100){
+  if (this.scoreNerd === 100) {
     alert('WELCOME TO THE DIGITAL AGE. Digital Skills powered by Ironhack.');
     this.stop();
   }
 
 
-  if (this.snake.hasEatenItself()){
+  if (this.snake.hasEatenItself()) {
     alert('Oh, AI replaced you. If you want to continue in the DIGITAL ERA...see you soon in Ironhack.');
     this.stop();
   }
@@ -230,9 +234,9 @@ Game.prototype.update = function(){
   this.drawRobot();
 };
 
-Game.prototype.stop =  function(){
+Game.prototype.stop = function() {
   console.log("Game stopped");
-  if (this.intervalId){
+  if (this.intervalId) {
     clearInterval(this.intervalId);
     this.intervalId = undefined;
     clearInterval(this.intervalRobot);
@@ -252,11 +256,11 @@ Game.prototype.stop =  function(){
 $(document).ready(function() {
   var game = new Game({
     size: 620,
-    columns :23,
+    columns: 23,
     rows: 10,
     speed: 2,
     Snake: Snake,
     Robot: Snake
   });
-   game.start();
+  game.start();
 });
